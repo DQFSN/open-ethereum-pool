@@ -180,6 +180,8 @@ func (r *RedisClient) WriteShare(login, id string, params []string, diff int64, 
 
 	ms := util.MakeTimestamp()
 	ts := ms / 1000
+	
+	_  = r.client.LPush(r.formatKey("shares2"), strconv.Itoa(int(ts))+":"+login+":"+strconv.Itoa(int(diff)))
 
 	_, err = tx.Exec(func() error {
 		r.writeShare(tx, ms, ts, login, id, diff, window)
@@ -203,6 +205,8 @@ func (r *RedisClient) WriteBlock(login, id string, params []string, diff, roundD
 
 	ms := util.MakeTimestamp()
 	ts := ms / 1000
+
+	_ = r.client.LPush(r.formatKey("blocks2"), strconv.Itoa(int(ts))+":"+login+":"+strconv.Itoa(int(height)))
 
 	cmds, err := tx.Exec(func() error {
 		r.writeShare(tx, ms, ts, login, id, diff, window)

@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/sammy007/open-ethereum-pool/rpc"
-	"github.com/sammy007/open-ethereum-pool/util"
+	//"github.com/sammy007/open-ethereum-pool/util"
 )
 
 // Allow only lowercase hexadecimal with 0x prefix
@@ -21,9 +21,9 @@ func (s *ProxyServer) handleLoginRPC(cs *Session, params []string, id string) (b
 	}
 
 	login := strings.ToLower(params[0])
-	if !util.IsValidHexAddress(login) {
-		return false, &ErrorReply{Code: -1, Message: "Invalid login"}
-	}
+	//if !util.IsValidHexAddress(login) {
+	//	return false, &ErrorReply{Code: -1, Message: "Invalid login"}
+	//}
 	if !s.policy.ApplyLoginPolicy(login, cs.ip) {
 		return false, &ErrorReply{Code: -1, Message: "You are blacklisted"}
 	}
